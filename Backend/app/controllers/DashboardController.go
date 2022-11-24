@@ -8,6 +8,8 @@ import (
 	// "fmt"
 	// "github.com/jinzhu/copier"
 
+
+
 	"github.com/gofiber/fiber/v2"
 
 	"database_assignment/app/models"
@@ -40,13 +42,14 @@ func InitializeDashboardController() DashboardController {
 			Year 		int  
 		}{}
 		payload.Branch_id = 1
-		payload.Year = 2020
+		payload.Year = 2022
 		stat := []struct {
-			Month int 
-			Num int	  
+			Month int `gorm:"column:month"`
+			Total_customers int	`gorm:"column:total_customers"`  
 		}{}
 		
 		db.Db.Raw("CALL ThongKeLuotKhach(?, ?)", payload.Branch_id, payload.Year).Scan(&stat)
+		
 		// if err != nil {
 		// 	return nil
 		// }
