@@ -38,13 +38,16 @@ func InitializeDashboardController() DashboardController {
 	}
 	dashboardController.GetCustomerStat = func (c *fiber.Ctx) error {
 		payload := struct {
-			Branch_id 	int
-			Year 		int  
+			Branch_id 	int	`json:"branch_id"`
+			Year 		int `json:"year"`
 		}{}
-		payload.Branch_id = 1
-		payload.Year = 2022
+		if err := c.BodyParser(&payload); err != nil {
+			return err
+		}
+		// payload.Branch_id = 1
+		// payload.Year = 2022
 		stat := []struct {
-			Month int `gorm:"column:month"`
+			Month 			int `gorm:"column:month"`
 			Total_customers int	`gorm:"column:total_customers"`  
 		}{}
 		

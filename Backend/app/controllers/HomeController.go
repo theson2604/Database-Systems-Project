@@ -82,7 +82,10 @@ func InitializeHomeController() HomeController {
 
 	}
 	homeController.Dashboard = func(c *fiber.Ctx) error {
-		return c.Render("dashboard", fiber.Map{})
+		var year, branch []int
+		db.Db.Table("BRANCH").Select("BRANCH.branch_id AS branch_id").Order("branch_id").Scan(&branch)
+		db.Db.Table("INVOICE").Distinct("YEAR(INVOICE.invoice_date) AS year").Order("year").Scan(&year)
+		return c.Render("dashboard", fiber.Map{"branch": branch, "year": year})
 	}
 
 	return homeController
