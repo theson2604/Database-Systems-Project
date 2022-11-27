@@ -6,7 +6,7 @@ import Main from '../../components/Main/Main';
 function Dashboard() {
     const [data, setData] = useState([])    
 
-    const handleData = (newData) => {
+    const handleData = (newData = '') => {
         setData(newData)
     }
 

@@ -13,10 +13,10 @@ function createData(Customer_id, Customer_type, Fullname, Email, Phone, Username
   }
   
   const rows = [
-    createData("Lasania Chiken Fri", 18908424, "2 March 2022", "Approved", 'dsfjadsf', 'hehe', 'hihi', 'hoho', 100),
-    createData("Big Baza Bang ", 18908424, "2 March 2022", "Pending", 'dsfjadsf', 'hehe', 'hihi', 'hoho', 100),
-    createData("Mouth Freshner", 18908424, "2 March 2022", "Approved", 'dsfjadsf', 'hehe', 'hihi', 'hoho', 100),
-    createData("Cupcake", 18908421, "2 March 2022", "Delivered", 'dsfjadsf', 'hehe', 'hihi', 'hoho', 100),
+    createData("Lasania Chiken Fri", 18908424, "Nguyen van a", "Approved", 'dsfjadsf', 'hehe', 'hihi', 'hoho', 100),
+    createData("Big Baza Bang ", 18908424, "Nguyen van b", "Pending", 'dsfjadsf', 'hehe', 'hihi', 'hoho', 100),
+    createData("Mouth Freshner", 18908424, "Nguyen van c", "Approved", 'dsfjadsf', 'hehe', 'hihi', 'hoho', 100),
+    createData("Cupcake", 18908421, "Nguyen van d", "Delivered", 'dsfjadsf', 'hehe', 'hihi', 'hoho', 100),
   ];
 
   const setTitle = (type) => {
@@ -65,12 +65,13 @@ function InfoTable({data}) {
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                {titles.map((title, index) => (
-                  <TableCell align={(index===0)? '' : 'left'}>{title}</TableCell>
-                ))}
+                {titles.map((title, index) => {
+                  if (index===0) return (<TableCell key={index}>{title}</TableCell>) 
+                  else return (<TableCell key={index} align='left'>{title}</TableCell>)
+                  })}
               </TableRow>
             </TableHead>
-            <TableBody style={{ color: "white" }}>
+            <TableBody style={{ color: "white", overflowY: 'scroll' }}>
               {rows.map((row) => {if (type==='customer') 
               return (
                 <TableRow
