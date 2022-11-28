@@ -14,6 +14,7 @@ import (
 
 	"database_assignment/app/models"
 	"database_assignment/config/db"
+	store "database_assignment/config/session"
 )
 
 
@@ -32,6 +33,12 @@ func InitializeDashboardController() DashboardController {
 	var dashboardController = DashboardController{}
 
 	dashboardController.GetCustomer = func (c *fiber.Ctx) error {
+		sess, err := store.Store.Get(c)
+		if err != nil {
+			panic(err)
+		}
+		
+		db.ConnectDatabase(sess.Get("username").(string), sess.Get("password").(string))
 		Customer := []models.Customer{}
 		db.Db.Find(&Customer)
 		return c.JSON(Customer)
@@ -44,13 +51,19 @@ func InitializeDashboardController() DashboardController {
 		if err := c.BodyParser(&payload); err != nil {
 			return err
 		}
+	
 		// payload.Branch_id = 1
 		// payload.Year = 2022
 		stat := []struct {
 			Month 			int `gorm:"column:month"`
 			Total_customers int	`gorm:"column:total_customers"`  
 		}{}
+		sess, err := store.Store.Get(c)
+		if err != nil {
+			panic(err)
+		}
 		
+		db.ConnectDatabase(sess.Get("username").(string), sess.Get("password").(string))
 		db.Db.Raw("CALL ThongKeLuotKhach(?, ?)", payload.Branch_id, payload.Year).Scan(&stat)
 		
 		// if err != nil {
@@ -65,6 +78,7 @@ func InitializeDashboardController() DashboardController {
 		// }
 		// res, _ := json.Marshal(rows)
 		// log.Println(res)
+		
 		return c.JSON(stat)
 	}
 	dashboardController.InsertRoom = func (c *fiber.Ctx) error {

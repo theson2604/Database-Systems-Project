@@ -23,7 +23,7 @@ CREATE PROCEDURE DB_Assignment.ThongKeLuotKhach (
     IN yearr SMALLINT
 )
 BEGIN
-	SELECT SUM(BOOKING_ROOM.num_of_guests) AS total_customers
+	SELECT MONTH(INVOICE.invoice_date) AS month, SUM(BOOKING_ROOM.num_of_guests) AS total_customers
     FROM INVOICE
 		 INNER JOIN BOOKING_ROOM ON INVOICE.booking_id = BOOKING_ROOM.booking_id
          INNER JOIN RENTING_ROOM ON RENTING_ROOM.booking_id = BOOKING_ROOM.booking_id

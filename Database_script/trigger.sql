@@ -36,12 +36,46 @@ DROP TRIGGER IF EXISTS DB_Assignment.TongTienDonDatPhong $$
 CREATE TRIGGER DB_Assignment.TongTienDonDatPhong AFTER INSERT ON RENTING_ROOM
 FOR EACH ROW
 BEGIN
-	DECLARE total_cost INT;
+	DECLARE total_cost INT DEFAULT 0;
+    DECLARE customer_id CHAR(8);
     DECLARE customer_type INT;
+	DECLARE packet_name NVARCHAR(15);
     
-	UPDATE BOOKING_ROOM
-    SET BOOKING_ROOM.total_cost = total_cost
-    WHERE BOOKING_ROOM.booking_id = NEW.booking_id;
+	SELECT BOOKING_ROOM.packet_name, BOOKING_ROOM.customer_id
+	INTO packet_name, customer_id
+	FROM BOOKING_ROOM
+	WHERE BOOKING_ROOM.booking_id = NEW.booking_id;
+	-- if exist packet -> price = 0 otherwise price = room_price or discount room_price
+	IF packet_name IS NOT NULL THEN
+		UPDATE BOOKING_ROOM
+		SET BOOKING_ROOM.total_cost = 0
+		WHERE BOOKING_ROOM.booking_id = NEW.booking_id;
+	ELSE
+		-- Get price of room
+		SELECT BRANCH_HAVE_ROOMTYPE.price
+        INTO total_cost
+		FROM RENTING_ROOM
+			 INNER JOIN ROOM ON (RENTING_ROOM.room_id = ROOM.room_id AND RENTING_ROOM.branch_id = ROOM.branch_id)
+             INNER JOIN BRANCH_HAVE_ROOMTYPE ON (BRANCH_HAVE_ROOMTYPE.branch_id = ROOM.branch_id AND BRANCH_HAVE_ROOMTYPE.roomtype_id = ROOM.roomtype_id)
+		WHERE RENTING_ROOM.branch_id = NEW.branch_id AND RENTING_ROOM.booking_id = NEW.booking_id;
+		-- Check customer type
+        SELECT CUSTOMER.customer_type
+        INTO customer_type
+        FROM CUSTOMER
+        WHERE CUSTOMER.customer_id = customer_id;
+        -- Calc total cost
+        IF customer_type = 2 THEN
+			SET total_cost = total_cost*0.9;
+		ELSEIF customer_type = 3 THEN
+			SET total_cost = total_cost*0.85;
+		ELSEIF customer_type = 4 THEN
+			SET total_cost = total_cost*0.8;
+		END IF;
+        -- Update new cost
+        UPDATE BOOKING_ROOM
+		SET BOOKING_ROOM.total_cost = BOOKING_ROOM.total_cost + total_cost
+		WHERE BOOKING_ROOM.booking_id = NEW.booking_id;
+	END IF;
     
 END;$$
 DELIMITER ;

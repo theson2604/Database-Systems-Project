@@ -16,7 +16,7 @@ export async function getCustomerStat(branch_id, year) {
     // let branch_id = $('#branch option:selected').val()
     // let year = $('#year option:selected').val()
 
-    return fetch('http://localhost:3000/db/GetCustomerStat', {
+    return fetch('/db/GetCustomerStat', {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
     
     
@@ -32,7 +32,7 @@ export async function getCustomerStat(branch_id, year) {
 
 // LOGIN HANDLE
 export async function loginUser(credentials) {
-    return fetch('http://localhost:3000/login', {
+    return fetch('/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

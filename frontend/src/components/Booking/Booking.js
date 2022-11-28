@@ -5,7 +5,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import '../Customer/Customer.scss'
+import '../GlobalStyles/Table.scss'
 import './Booking.scss'
 import { useContext } from "react";
 import { BackgroundContext } from "../../pages/Dashboard/Dashboard";
