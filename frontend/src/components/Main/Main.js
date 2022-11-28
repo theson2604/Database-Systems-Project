@@ -23,7 +23,7 @@ function Main({data}) {
         data[1] = rows
     }
     else if (data[0] === 'add') Page = AddRoom
-    else if (data[0] == 'static') Page = StatTable
+    else if (data[0] === 'static') Page = StatTable
     else Page = Customer
 
     console.log(data)
