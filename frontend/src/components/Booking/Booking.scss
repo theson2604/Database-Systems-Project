@@ -1,0 +1,27 @@
+
+.modal {
+    // display: none;
+    margin-top: 2%;
+    margin-left: 2%;
+    overflow: auto; /* Enable scroll if needed */
+    position: fixed;
+    z-index: 1;
+    border-radius: 8px;
+    background: linear-gradient(
+      106.37deg,
+      #ffe1bc 29.63%,
+      #ffcfd1 51.55%,
+      #f3c6f1 90.85%
+    );
+}
+
+.modalButton {
+    margin: 10px 0;
+
+    Width: 70px;
+    Height: 20px;
+
+    background: #fefefe;
+    border-radius: 8px;
+    border: none;
+}
