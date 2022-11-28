@@ -1,32 +1,27 @@
 
 .modal {
     // display: none;
-    margin-top: 0%;
-    margin-left: 5%;
+    margin-top: 2%;
+    margin-left: 2%;
     overflow: auto; /* Enable scroll if needed */
     position: fixed;
     z-index: 1;
+    border-radius: 8px;
+    background: linear-gradient(
+      106.37deg,
+      #ffe1bc 29.63%,
+      #ffcfd1 51.55%,
+      #f3c6f1 90.85%
+    );
 }
 
 .modalButton {
-    display: flex;
-    flex-direction: row-reverse;
+    margin: 10px 0;
 
-    margin: 20px 10% 0 0;
+    Width: 70px;
+    Height: 20px;
 
-    button {
-        Width: 90px;
-        Height: 35px;
-
-        background: rgba(0, 204, 144, 0.8);
-        border-radius: 8px;
-        margin: 0 0.5rem;
-        border: none;
-    }
-}
-
-.iconModal {
-    position: relative;
-    top: -1.5rem;
-    left: 3.8rem;
+    background: #fefefe;
+    border-radius: 8px;
+    border: none;
 }

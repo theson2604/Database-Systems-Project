@@ -1,5 +1,5 @@
 import { TextField } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -8,6 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import '../Table/Table.scss'
+import { BackgroundContext } from "../../pages/Dashboard/Dashboard";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfo } from '@fortawesome/free-solid-svg-icons';
 import Booking from "../Booking/Booking";
@@ -29,6 +30,8 @@ function Search({data}) {
     const [modal, setModal] = useState('none')
     const [bookingData, setBookingData] = useState([])
 
+    const setBackground = useContext(BackgroundContext)
+
     const handleName = (e) => {
         setName(e.target.value.toLowerCase())
     }
@@ -45,6 +48,7 @@ function Search({data}) {
     const handleClick = () => {
         setModal('block')
         setBookingData(rows)
+        setBackground(true)
     }
 
     customers = filterData()
@@ -52,7 +56,7 @@ function Search({data}) {
     return (
         <>
         <Booking modal={modal} setModal={setModal} bookings={bookingData}/>
-        <div className="table" style={{background: (modal==='block') && 'rgba(0,0,0,0.4)'}}>
+        <div className="table">
             <TextField
                 id="outlined-basic"
                 variant="outlined"
@@ -63,7 +67,7 @@ function Search({data}) {
             />
             <TableContainer
                 component={Paper}
-                style={{ boxShadow: "0px 13px 20px 0px #80808029", borderRadius: '1rem'}}
+                style={{ boxShadow: "0px 13px 20px 0px #80808029", borderRadius: '1rem', background: (modal==='block') && 'rgba(0,0,0,0.4)'}}
             >
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
