@@ -6,7 +6,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import "./Table.scss";
+import "./Customer.scss";
 
 function createData(Customer_id, Customer_type, Fullname, Email, Phone, Username, Password, Ssn, Score) {
     return { Customer_id, Customer_type, Fullname, Email, Phone, Username, Password, Ssn, Score };

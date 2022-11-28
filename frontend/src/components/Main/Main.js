@@ -1,6 +1,7 @@
 import AddRoom from '../AddRoom/AddRoom';
 import Search from '../Search/Search';
-import InfoTable from '../Table/Table';
+import StatTable from '../Stat/Stat';
+import Customer from '../Customer/Customer'
 import './Main.scss'
 
 function Main({data}) {
@@ -22,7 +23,8 @@ function Main({data}) {
         data[1] = rows
     }
     else if (data[0] === 'add') Page = AddRoom
-    else Page = InfoTable
+    else if (data[0] == 'static') Page = StatTable
+    else Page = Customer
 
     console.log(data)
 

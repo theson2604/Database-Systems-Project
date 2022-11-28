@@ -1,0 +1,20 @@
+.MuiTableRow-root > * {
+    padding: 10px;
+  }
+  
+  .MuiTableRow-root.MuiTableRow-head > * {
+    font-weight: bold !important;
+  }
+  
+  .table td,
+  th {
+    border: none !important;
+  }
+  
+  .table:first-child {
+    border-radius: 0.7rem !important;
+  }
+
+  .table {
+    margin-right: 16px;
+  }
