@@ -8,17 +8,29 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import '../Table/Table.scss'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faInfo } from '@fortawesome/free-solid-svg-icons';
+import Booking from "../Booking/Booking";
+
+function createData(Booking_id, Booking_date, Num_of_guests, Checkin_date,  Checkout_date, State, Total_cost) {
+    return {Booking_id, Booking_date, Num_of_guests, Checkin_date,  Checkout_date, State, Total_cost};
+  }
+
+const rows = [createData(0, '2022-01-10 13:23:44', 2, '2022-01-12 13:23:44', '2022-01-14 11:23:44', 1, 100, 'KH258329'),
+createData(0, '2022-01-12 13:23:44', 3, '2022-01-13 13:23:44', '2022-01-18 11:23:44', 1, 650, 'KH258326'),
+createData(0, '2022-01-12 18:23:44', 3, '2022-01-14 13:23:44', '2022-01-18 12:23:44', 1, 450, 'KH258328')]
 
 function Search({data}) {
     const info = data[1]
-    const titles = ['Customer_id', 'Customer_type', 'Fullname', 'Email', 'Phone', 'Username', 'Ssn', 'Score']
+    const titles = ['Customer_id', 'Customer_type', 'Fullname', 'Email', 'Phone', 'Username', 'Ssn', 'Score', '']
     let customers = []
 
     const [name, setName] = useState('')
+    const [modal, setModal] = useState('none')
+    const [bookingData, setBookingData] = useState([])
 
     const handleName = (e) => {
         setName(e.target.value.toLowerCase())
-        console.log(name)
     }
 
     const filterData = () => {
@@ -30,10 +42,17 @@ function Search({data}) {
         }))
     }
 
+    const handleClick = () => {
+        setModal('block')
+        setBookingData(rows)
+    }
+
     customers = filterData()
 
     return (
-        <div className="table">
+        <>
+        <Booking modal={modal} setModal={setModal} bookings={bookingData}/>
+        <div className="table" style={{background: (modal==='block') && 'rgba(0,0,0,0.4)'}}>
             <TextField
                 id="outlined-basic"
                 variant="outlined"
@@ -71,12 +90,21 @@ function Search({data}) {
                         <TableCell align="left">{customer.Username}</TableCell>
                         {/* <TableCell align="left">{customer.Password}</TableCell> */}
                         <TableCell align="left">{customer.Ssn}</TableCell>
+                        <TableCell align="left">{customer.Score}</TableCell>
+                        <TableCell align="left" style={{display: 'flex', justifyContent: 'center'}}>
+                            <FontAwesomeIcon 
+                                className="icon" 
+                                icon={faInfo} 
+                                onClick={() => handleClick()}
+                            />
+                        </TableCell>
                         </TableRow>
                     ))}
                     </TableBody>
                 </Table>
             </TableContainer>
         </div> 
+        </>
     );
 }
 

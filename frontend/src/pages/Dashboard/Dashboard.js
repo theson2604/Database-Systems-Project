@@ -1,7 +1,9 @@
-import {useState} from 'react'
+import {useState, createContext} from 'react'
 import './Dashboard.scss'
 import Sidebar from '../../components/Sidebar/Sidebar';
 import Main from '../../components/Main/Main';
+
+export const backgroundContext = createContext()
 
 function Dashboard() {
     const [data, setData] = useState([])    
