@@ -1,28 +1,28 @@
-INSERT INTO db_Assignment.branch
+INSERT INTO DB_Assignment.BRANCH
 VALUES (0, 'Ho Chi Minh', '123 ly thuong kiet', '0120455689', '123@gmail.com'),
 	(0, 'Binh Duong', '123 to hien thanh', '0123555689', '123@gmail.com'),
        (0, 'Binh Thuan', '123 3/2', '0123455689', '123@gmail.com'),
        (0, 'Binh Phuoc', '59 nguyen trai', '0123655689', '123@gmail.com');
 
-INSERT INTO db_Assignment.BRANCH_PHOTO
+INSERT INTO DB_Assignment.BRANCH_PHOTO
 VALUES (1, 'https://statics.vinpearl.com/Tong%20quan_1647360666_1647850027.png'),
 	   (2, 'https://statics.vinpearl.com/Hinh-anh-Vinpearl-Discovery-Golflink-Nha-Trang-Villa-51_1639500422.jpg'),
        (3, 'https://go2joy.s3.ap-southeast-1.amazonaws.com/blog/wp-content/uploads/2022/04/05104501/vinpearl-land-nha-trang-o-dau.jpg'),
        (4, 'https://tanthoidai.com.vn/images/gallery/images/22(2).jpg');
 
-INSERT INTO DB_Assignment.zone
+INSERT INTO DB_Assignment.ZONE
 VALUES (1, 'san vuon'),
        (2, 'bien'),
        (3, 'vip'),
        (4, 'biet thu');
 
-INSERT INTO DB_Assignment.room_type
+INSERT INTO DB_Assignment.ROOM_TYPE
 VALUES (1, '2 giuong', 1.2, 3, '...'),
        (2, '1 giuong', 1.5, 2, '...'),
        (3, '2 giuong', 2, 6, '...'),
        (4, '2 giuong', 3, 5, '...');
 
-INSERT INTO DB_Assignment.bed
+INSERT INTO DB_Assignment.BED
 VALUES (1, 1.5, 3),
        (2, 1.2, 2),
        (3, 2.0, 4),
@@ -34,7 +34,7 @@ VALUES (2, 1, 200),
        (3, 2, 400),
        (4, 3, 700);
 
-INSERT INTO DB_Assignment.room
+INSERT INTO DB_Assignment.ROOM
 VALUES ('101', 1, 1, 'san vuon'),
        ('102', 2, 2, 'bien'),
        ('103', 3, 3, 'vip'),
@@ -126,7 +126,7 @@ VALUES (0, '2022-01-10 13:23:44', 2, '2022-01-12 13:23:44', '2022-01-14 11:23:44
        (0, '2022-12-10 13:23:44', 4, '2022-12-14 13:23:44', '2022-12-17 13:12:44', 1, 0, 'KH258327', '3');
 
 INSERT INTO DB_Assignment.RENTING_ROOM
-VALUES (0, 2, '102'),
+VALUES (1, 2, '102'),
        (1, 3, '103'),
        (2, 4, '104'),
        (3, 2, '102'),
@@ -154,8 +154,7 @@ VALUES (0, 2, '102'),
 
 -- 18 Hóa đơn
 INSERT INTO DB_Assignment.INVOICE
-VALUES (0, '2022-01-10 13:23:44', '13:23:44', '11:23:44', 0),
-       (0, '2022-01-12 13:23:44', '13:23:44', '11:23:44', 1),
+VALUES (0, '2022-01-12 13:23:44', '13:23:44', '11:23:44', 1),
        (0, '2022-01-12 18:23:44', '13:23:44', '12:23:44', 2),
        (0, '2022-02-10 13:23:44', '13:23:44', '11:23:44', 3),
        (0, '2022-02-12 13:23:44', '13:23:44', '11:23:44', 4),

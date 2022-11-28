@@ -13,7 +13,8 @@ var homeController controllers.HomeController= controllers.InitializeHomeControl
 func HomeRouter(home fiber.Router) {
 	
 	home.Post("/login", homeController.Login)
-	home.Get("/logout", homeController.Logout)
+	home.Post("/logout", homeController.Logout)
+	home.Post("/branchyear", homeController.GetBranchYear)
 	home.Get("/dashboard", middleware.IsAuthenticated, homeController.Dashboard)
 	home.Get("/", middleware.SwithcRoute, homeController.Home)
 	home.Get("*", homeController.EmptyPage)
