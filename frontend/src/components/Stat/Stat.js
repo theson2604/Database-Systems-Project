@@ -17,7 +17,7 @@ import { getCustomerStat } from "../../service";
 
 
   const setTitle = () => {
-    return ['Month', 'Total_customers']
+    return ['Month', 'Total customers']
   }
 
  
@@ -104,7 +104,7 @@ function StatTable() {
           </FormControl>
         }
         <FormControl sx={{ m: 1, minWidth: 120 }}>
-          <Button variant="contained" color="success" size="large" onClick={handleSubmit}>
+          <Button variant="contained" color="inherit" size="large" onClick={handleSubmit} sx={{ marginLeft: "auto" }}>
               Look up
           </Button>
         </FormControl>
