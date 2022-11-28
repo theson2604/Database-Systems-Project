@@ -52,7 +52,7 @@ function StatTable() {
  
     useEffect(() => {
       if (!viewBranch) {
-        fetch('http://localhost:3000/branchyear', {
+        fetch('/branchyear', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'
