@@ -32,7 +32,7 @@ function StatTable() {
     
     const titles = setTitle()
     // const rows = info
- 
+
     useEffect(() => {
       if (!viewBranch) {
         fetch('/branchyear', {
@@ -46,8 +46,8 @@ function StatTable() {
         .then(data => {
           setViewBranch(data.Branch)
           setViewYear(data.Year)
-          setBranch(data.Branch[0])
-          setYear(data.Year[0])
+          // setBranch(data.Branch[0])
+          // setYear(data.Year[0])
          
         })
       }
@@ -59,7 +59,8 @@ function StatTable() {
       e.preventDefault()
       
       const getStat = await getCustomerStat(branch, year);
-      setInfo(getStat)
+      if (getStat.length)
+        setInfo(getStat)
 
     }
 
@@ -134,7 +135,7 @@ function StatTable() {
                   <TableCell align="center">{row.Total_customers}</TableCell>
                 </TableRow>
               )})}
-              {!info && <TableRow><TableCell align="center" colSpan={2}><b>Chưa có dữ liệu</b></TableCell></TableRow>}
+              {!info && <TableRow><TableCell align="center" colSpan={2}><h2>Chưa có dữ liệu</h2></TableCell></TableRow>}
             </TableBody>
           </Table>
         </TableContainer>

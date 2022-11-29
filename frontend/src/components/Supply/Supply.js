@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -7,6 +7,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
+import { getSupplyType } from '../../service';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 6;
@@ -19,18 +20,7 @@ const MenuProps = {
   },
 };
 
-const names = [
-  'Oliver Hansen',
-  'Van Henry',
-  'April Tucker',
-  'Ralph Hubbard',
-  'Omar Alexander',
-  'Carlos Abbott',
-  'Miriam Wagner',
-  'Bradley Wilkerson',
-  'Virginia Andrews',
-  'Kelly Snyder',
-];
+
 
 function getStyles(name, personName, theme) {
   return {
@@ -41,47 +31,57 @@ function getStyles(name, personName, theme) {
   };
 }
 
-export default function Suppy() {
+export default function Suppy({selectSupply, setSelectSupply}) {
   const theme = useTheme();
-  const [personName, setPersonName] = useState([]);
-
+  const [supply, setSupply] = useState()
+  
+  useEffect(() => {
+    async function fetchSupply() {
+      const sup = await getSupplyType();
+      
+      setSupply(sup)
+    }
+    if (!supply)
+      fetchSupply()
+  })
   const handleChange = (e) => {
     const {
       target: { value },
     } = e
-    setPersonName(
+    setSelectSupply(
       // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
+      value
     );
   };
 
   return (
     <div>
-      <FormControl style={{margin: '5px 0', width: '280px'}}>
-        <InputLabel id="demo-multiple-chip-label" style={{color: "black"}}>Supply</InputLabel>
+      <FormControl  sx={{ m: 1, width:500}}>
+        <InputLabel id="demo-multiple-chip-label">Supply</InputLabel>
         <Select
+          name="supply"
           labelId="demo-multiple-chip-label"
           id="demo-multiple-chip"
           multiple
-          value={personName}
+          value={selectSupply}
           onChange={handleChange}
-          input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+          input={<OutlinedInput id="select-multiple-chip" label="Supply" />}
           renderValue={(selected) => (
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
               {selected.map((value) => (
-                <Chip key={value} label={value} />
+                <Chip key={value.Supply_id} label={value.Supplyname} />
               ))}
             </Box>
           )}
           MenuProps={MenuProps}
         >
-          {names.map((name) => (
+          {supply && supply.map((name, idx) => (
             <MenuItem
-              key={name}
+              key={idx}
               value={name}
-              style={getStyles(name, personName, theme)}
+              style={getStyles(name, supply, theme)}
             >
-              {name}
+              {name.Supplyname}
             </MenuItem>
           ))}
         </Select>

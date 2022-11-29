@@ -8,11 +8,12 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 // import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { FormControl } from '@mui/material';
 
-function Bed() {
+function Bed({beds, setBeds}) {
     const [size, setSize] = useState()
     const [quantity, setQuantity] = useState()
-    const [beds, setBeds] = useState([])
+   
 
     const [open, setOpen] = useState(false);
 
@@ -24,8 +25,8 @@ function Bed() {
         setOpen(false)
         if (type === 'add') {
             const newBed = {
-                size: size,
-                quantity: quantity,
+                "Size": parseFloat(size),
+                "Quantity": parseInt(quantity),
             }
             setBeds([...beds, newBed])
         }
@@ -43,9 +44,9 @@ function Bed() {
     console.log('bed', beds)
 
     return (
-        <div style={{marginBottom: '0.5rem'}}>
+        <FormControl sx={{ m: 1}}>
             Bed
-            <FontAwesomeIcon icon={faPlus} style={{marginLeft: '0.2rem'}} onClick={handleClickOpen}/>
+            
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>Bed information</DialogTitle>
                 <DialogContent>
@@ -57,7 +58,8 @@ function Bed() {
                     margin="dense"
                     id="size"
                     label="Size"
-                    type="text"
+                    type="number"
+                    inputProps={{step: "0.01", lang:"en-US"}}
                     fullWidth
                     variant="standard"
                     onChange={(newValue) => setSize(newValue.target.value)}
@@ -66,7 +68,7 @@ function Bed() {
                     margin="dense"
                     id="quantiy"
                     label="Quantity"
-                    type="text"
+                    type="number"
                     fullWidth
                     variant="standard"
                     onChange={(newValue) => setQuantity(newValue.target.value)}
@@ -80,13 +82,14 @@ function Bed() {
             {beds.map((bed, index) => {
                 return (
                     <div key={index} style={{fontSize: '12px'}}>
-                        <span>Size: {bed.size} </span>
-                        <span>Quantity: {bed.quantity} </span>
+                        <span>Size: {bed.Size} </span>
+                        <span>Quantity: {bed.Quantity} </span>
                         <span style={{cursor: 'pointer'}} onClick={() => deleteBed(index)}>&times;</span>
                     </div>
                 )
             })}
-        </div>
+            <FontAwesomeIcon icon={faPlus} style={{marginLeft: '0.2rem'}} onClick={handleClickOpen}/>
+        </FormControl>
     );
 }
 

@@ -69,3 +69,28 @@ export async function loginUser(credentials) {
     })
       .then(data => data.json())
    }
+
+export async function getSupplyType() {
+  return fetch('/db/GetSupplyType', {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    })
+  .then((response) => response.json())
+    
+}
+
+export async function saveRoomTypeRecord(data) {
+  return fetch('/db/AddRoom', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data),
+    credentials: 'same-origin'
+  })
+    .then(data => data.json())
+ }
