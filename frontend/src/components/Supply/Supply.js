@@ -54,6 +54,10 @@ export default function Suppy({selectSupply, setSelectSupply}) {
     );
   };
 
+  useEffect(() => {
+    getSupplyInfo(personName)
+  }, [personName])
+
   return (
     <div>
       <FormControl  sx={{ m: 1, width:500}}>
