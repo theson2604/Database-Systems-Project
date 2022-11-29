@@ -77,9 +77,7 @@ function AddRoom() {
       const handleSupply = (data) => {
         let newValue = {...values, Supply: data}
         setValues(newValue)
-        console.log(values)
       }
-      console.log(values)
 
       return (
         <div className="addWrapper">
