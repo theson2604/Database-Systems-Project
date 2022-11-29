@@ -8,36 +8,19 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import "./Stat.scss";
+import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import { Button } from "@mui/material";
 import { getCustomerStat } from "../../service";
 
 
   const setTitle = () => {
-    return ['Month', 'Total_customers']
+    return ['Month', 'Total customers']
   }
 
-  const makeStyle=(status)=>{
-    if(status === 'Approved')
-    {
-      return {
-        background: 'rgb(145 254 159 / 47%)',
-        color: 'green',
-      }
-    }
-    else if(status === 'Pending')
-    {
-      return{
-        background: '#ffadad8f',
-        color: 'red',
-      }
-    }
-    else{
-      return{
-        background: '#59bfff',
-        color: 'white',
-      }
-    }
-  }
-
+ 
 function StatTable() {
     
     const [viewBranch, setViewBranch] = useState()
@@ -83,26 +66,50 @@ function StatTable() {
     return ( 
     <div className="table">
         <h3>{'Statistic information of branch'}</h3>
-        <form onSubmit={handleSubmit}>
-        {viewBranch && 
-          <select name="branch" onChange={e => setBranch(e.target.value)}>
+        
+        {viewBranch && <FormControl sx={{ m: 1, minWidth: 120 }} >
+          <InputLabel id="select-branch">Branch</InputLabel>
+          <Select
+            labelId="select-branch"
+            id="select-branch"
+            
+            label="Branch"
+            onChange={e => setBranch(e.target.value)}
+          >
+          
           {viewBranch.map((id, idx)=> {
             
-            return <option key={idx} value={id} >CN{id}</option>
+            return <MenuItem value={id}>CN{id}</MenuItem>
             }
           )}
-          </select>
+          </Select>
+          </FormControl>
         }
-        {viewYear && 
-          <select name="year" onChange={e => setYear(e.target.value)}>
+        {viewYear && <FormControl sx={{ m: 1, minWidth: 120 }}>
+          <InputLabel id="select-branch">Year</InputLabel>
+          <Select
+            labelId="select-year"
+            id="select-year"
+            
+            label="year"
+            onChange={e => setYear(e.target.value)}
+          >
+          
           {viewYear.map((id, idx)=> {
-           
-            return <option key={idx} value={id}>{id}</option>
-        })}
-          </select>
+            
+            return <MenuItem value={id}>{id}</MenuItem>
+            }
+          )}
+          </Select>
+          </FormControl>
         }
-            <button type="submit">View</button>
-        </form>
+        <FormControl sx={{ m: 1, minWidth: 120 }}>
+          <Button variant="contained" color="inherit" size="large" onClick={handleSubmit} sx={{ marginLeft: "auto" }}>
+              Look up
+          </Button>
+        </FormControl>
+            
+        
         <TableContainer
           component={Paper}
           style={{ boxShadow: "0px 13px 20px 0px #80808029", borderRadius: '1rem'}}
@@ -127,7 +134,7 @@ function StatTable() {
                   <TableCell align="center">{row.Total_customers}</TableCell>
                 </TableRow>
               )})}
-              {!info && <TableRow><TableCell align="center"><b>Chưa có dữ liệu</b></TableCell></TableRow>}
+              {!info && <TableRow><TableCell align="center" colSpan={2}><b>Chưa có dữ liệu</b></TableCell></TableRow>}
             </TableBody>
           </Table>
         </TableContainer>

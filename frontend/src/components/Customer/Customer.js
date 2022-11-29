@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState, useEffect } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -7,21 +8,13 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import "./Customer.scss";
+import { getCustomer } from "../../service";
 
-function createData(Customer_id, Customer_type, Fullname, Email, Phone, Username, Password, Ssn, Score) {
-    return { Customer_id, Customer_type, Fullname, Email, Phone, Username, Password, Ssn, Score };
-  }
-  
-  const rows = [
-    createData("Lasania Chiken Fri", 18908424, "Nguyen van a", "Approved", 'dsfjadsf', 'hehe', 'hihi', 'hoho', 100),
-    createData("Big Baza Bang ", 18908424, "Nguyen van b", "Pending", 'dsfjadsf', 'hehe', 'hihi', 'hoho', 100),
-    createData("Mouth Freshner", 18908424, "Nguyen van c", "Approved", 'dsfjadsf', 'hehe', 'hihi', 'hoho', 100),
-    createData("Cupcake", 18908421, "Nguyen van d", "Delivered", 'dsfjadsf', 'hehe', 'hihi', 'hoho', 100),
-  ];
 
-  const setTitle = (type) => {
-    if (type === 'customer') return ['Customer_id', 'Customer_type', 'Fullname', 'Email', 'Phone', 'Username', 'Ssn', 'Score']
-    else return ['Month', 'Total_customers']
+
+  const setTitle = () => {
+    return ['Customer_id', 'Customer_type', 'Fullname', 'Email', 'Phone', 'Username', 'Ssn', 'Score']
+    
   }
 
   const makeStyle=(status)=>{
@@ -32,32 +25,57 @@ function createData(Customer_id, Customer_type, Fullname, Email, Phone, Username
         color: 'green',
       }
     }
-    else if(status === 'Pending')
+    else if(parseInt(status) <  50)
     {
       return{
-        background: '#ffadad8f',
-        color: 'red',
+        
+        color: '#b78d78',
+      }
+    }
+    else if (parseInt(status) < 100)
+    {
+      return{
+        
+        color: '#63b4ae',
+      }
+    }
+    else if (parseInt(status) < 1000)
+    {
+      return{
+       
+        color: '#f08c78',
       }
     }
     else{
       return{
-        background: '#59bfff',
-        color: 'white',
+       
+        color: '#ffda83',
       }
     }
   }
 
-function InfoTable({data}) {
-    const [type, info] = data
-
+  function InfoTable() {
+    
+    const [customers, setCustomers] = useState()
     // if (info === '' || info === undefined || info === null) return 
     
-    const titles = setTitle(type)
+    const titles = setTitle()
     // const rows = info
+    
+    useEffect(() => {
+      async function fetchCustomer() {
+        const cus = await getCustomer();
+       
+        setCustomers(cus)
+      }
+      if (!customers)
+        fetchCustomer()
+    })
+
 
     return ( 
     <div className="table">
-        <h3>{(type==='customer')? 'Information of customers' : 'Statistic information of branch'}</h3>
+        <h3>Information of customers</h3>
         <TableContainer
           component={Paper}
           style={{ boxShadow: "0px 13px 20px 0px #80808029", borderRadius: '1rem'}}
@@ -65,14 +83,13 @@ function InfoTable({data}) {
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                {titles.map((title, index) => {
-                  if (index===0) return (<TableCell key={index}>{title}</TableCell>) 
-                  else return (<TableCell key={index} align='left'>{title}</TableCell>)
-                  })}
+                {titles.map((title, index) => 
+                   (<TableCell key={index} align='center'>{title}</TableCell>)
+                  )}
               </TableRow>
             </TableHead>
             <TableBody style={{ color: "white", overflowY: 'scroll' }}>
-              {rows.map((row) => {if (type==='customer') 
+              {customers && customers.map((row) => { 
               return (
                 <TableRow
                   key={row.Customer_id}
@@ -81,30 +98,20 @@ function InfoTable({data}) {
                   <TableCell component="th" scope="row">
                     {row.Customer_id}
                   </TableCell>
-                  <TableCell align="left">{row.Customer_type}</TableCell>
-                  <TableCell align="left">{row.Fullname}</TableCell>
-                  <TableCell align="left">{row.Email}</TableCell>
-                  <TableCell align="left">{row.Phone}</TableCell>
-                  <TableCell align="left">{row.Username}</TableCell>
+                  <TableCell align="center">{row.Customer_type}</TableCell>
+                  <TableCell align="center">{row.Fullname}</TableCell>
+                  <TableCell align="center">{row.Email}</TableCell>
+                  <TableCell align="center">{row.Phone}</TableCell>
+                  <TableCell align="center">{row.Username}</TableCell>
                   {/* <TableCell align="left">{row.Password}</TableCell> */}
-                  <TableCell align="left">{row.Ssn}</TableCell>
-                  <TableCell align="left">
+                  <TableCell align="center">{row.Ssn}</TableCell>
+                  <TableCell align="center">
                     <span className="status" style={makeStyle(row.Score)}>{row.Score}</span>
                   </TableCell>
                 </TableRow>
               )
-              else
-              return (
-                <TableRow
-                  key={row.Customer_id}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                    {row.Customer_id}
-                  </TableCell>
-                  <TableCell align="left">{row.Customer_type}</TableCell>
-                </TableRow>
-              )})}
+              })}
+              {!customers && <TableRow ><TableCell align="center" colSpan={2}><b>Loading ...</b></TableCell></TableRow>}
             </TableBody>
           </Table>
         </TableContainer>

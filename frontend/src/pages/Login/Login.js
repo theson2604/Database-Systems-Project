@@ -3,6 +3,7 @@ import { PropTypes } from "prop-types";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../../service";
+import { TextField } from "@mui/material";
 import './Login.scss';
 
 function Login ({tokener, setToken}) {
@@ -35,8 +36,26 @@ function Login ({tokener, setToken}) {
         <span className="title">Login</span>
         {state && <div style={{corlor: 'red'}}>Login failed</div>}
         <form onSubmit={handleSubmit}>
-          <input type="text" placeholder="username" name='username' onChange={e => setUseranme(e.target.value)}/>
-          <input type="password" placeholder="password" name='password' onChange={e => setPassword(e.target.value)}/>
+        <TextField
+                id={!state ? "outlined-basic" : "outlined-error-helper-text"}
+                variant="outlined"
+                error = {state}
+               
+                label="Username"
+                onChange={e => setUseranme(e.target.value)}
+                helperText={state && "Incorrect"}
+            />
+          <TextField
+                id={!state ? "outlined-basic" : "outlined-error-helper-text"}
+                variant="outlined"
+                error = {state}
+                
+                label="Password"
+                onChange={e => setPassword(e.target.value)}
+                helperText={state && "Incorrect"}
+            />
+          {/* <input type="text" placeholder="username" name='username' onChange={}/>
+          <input type="password" placeholder="password" name='password' onChange={}/> */}
           <button type='submit'>Sign in</button>
         </form>
         <p>You don't have an account? <Link to="/user/register">Register</Link></p>
