@@ -27,20 +27,20 @@ function Bed() {
                 size: size,
                 quantity: quantity,
             }
-            setBeds([newBed, ...beds])
+            setBeds([...beds, newBed])
         }
     };
 
     const deleteBed = (index) => {
-        const newBeds = beds
-        console.log(beds)
-        newBeds.splice(index, 1)
-
-        console.log(newBeds)
-        setBeds(newBeds)
+        if (beds.length === 1) setBeds([])
+        else {
+            let newBeds = [...beds]
+            newBeds.splice(index, 1)
+            setBeds(newBeds)
+        }
     }
 
-    console.log(beds)
+    console.log('bed', beds)
 
     return (
         <div style={{marginBottom: '0.5rem'}}>
