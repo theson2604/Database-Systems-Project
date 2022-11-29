@@ -49,7 +49,7 @@ function Login ({tokener, setToken}) {
                 id={!state ? "outlined-basic" : "outlined-error-helper-text"}
                 variant="outlined"
                 error = {state}
-                
+                type="password"
                 label="Password"
                 onChange={e => setPassword(e.target.value)}
                 helperText={state && "Incorrect"}

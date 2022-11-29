@@ -1,5 +1,5 @@
-import { TextField } from "@mui/material";
-import React, { useState, useContext } from "react";
+import { Box, IconButton, InputBase } from "@mui/material";
+import React, { useState, useEffect } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -8,63 +8,86 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import '../GlobalStyles/Table.scss'
-import { BackgroundContext } from "../../pages/Dashboard/Dashboard";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faInfo } from '@fortawesome/free-solid-svg-icons';
+
+import SearchIcon from '@mui/icons-material/Search';
 import Booking from "../Booking/Booking";
+import { getCustomer } from "../../service";
 
-function createData(Booking_id, Booking_date, Num_of_guests, Checkin_date,  Checkout_date, State, Total_cost) {
-    return {Booking_id, Booking_date, Num_of_guests, Checkin_date,  Checkout_date, State, Total_cost};
-  }
 
-const rows = [createData(0, '2022-01-10 13:23:44', 2, '2022-01-12 13:23:44', '2022-01-14 11:23:44', 1, 100, 'KH258329'),
-createData(0, '2022-01-12 13:23:44', 3, '2022-01-13 13:23:44', '2022-01-18 11:23:44', 1, 650, 'KH258326'),
-createData(0, '2022-01-12 18:23:44', 3, '2022-01-14 13:23:44', '2022-01-18 12:23:44', 1, 450, 'KH258328')]
 
-function Search({data}) {
-    const info = data[1]
-    const titles = ['Customer_id', 'Customer_type', 'Fullname', 'Email', 'Phone', 'Username', 'Ssn', 'Score', '']
-    let customers = []
-
+function Search() {
+    const [info, setInfo] = useState()
+    const titles = ['Customer_id', 'Customer_type', 'Fullname', 'Email', 'Phone', 'Username', 'Ssn', 'Score']
+    
+    const [customers, setCustomers] = useState()
+    const [selectCustomer, setSelectCustomer] = useState({id: "", name: ""})
     const [name, setName] = useState('')
-    const [modal, setModal] = useState('none')
-    const [bookingData, setBookingData] = useState([])
-
-    const setBackground = useContext(BackgroundContext)
-
-    const handleName = (e) => {
-        setName(e.target.value.toLowerCase())
-    }
+    const [modal, setModal] = useState(false)
+   
+    useEffect(() => {
+        async function fetchCustomer() {
+          setInfo(await getCustomer());     
+        }
+        if (!info)
+            fetchCustomer()
+    })
 
     const filterData = () => {
-        return (info.filter(customer => {
+        return (info.filter(cus => {
             if (name.length !== 0) {
-                return customer.Fullname.toLowerCase().includes(name)
+                return cus.Fullname.toLowerCase().includes(name)
             }
             else return null
         }))
     }
 
-    const handleClick = () => {
-        setModal('block')
-        setBookingData(rows)
-        setBackground(true)
+    const handleName = (e) => {
+        setName(e.target.value.toLowerCase())
+       
     }
-
-    customers = filterData()
+    
+    
+    
+    const handleClick = (id, name) => {
+        setSelectCustomer({id, name})
+        console.log(selectCustomer)
+        setModal(true)
+        
+        // setBackground(true)
+    }
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        setCustomers(filterData())
+        // const cus = await getCustomerByName(name)
+        
+    }
+    
 
     return (
         <>
-        <Booking modal={modal} setModal={setModal} bookings={bookingData}/>
+        <Booking modal={modal} setModal={setModal} customer={selectCustomer}/>
+        <Box sx={{ margin: 2 ,display: 'flex', alignItems: 'center', justifyContent:"center"}} maxWidth>
+            <Paper elevation={3}
+                component="form"
+                sx={{borderRadius: 5, p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }} 
+                onSubmit={handleSubmit}
+                >
+                    
+                    <InputBase
+                        sx={{ ml: 1, flex: 1 }}
+                        name="fullname"
+                        placeholder="Search customers on database"
+                        inputProps={{ 'aria-label': 'search database' }}
+                        onChange={handleName}
+                    />
+                    <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
+                        <SearchIcon />
+                    </IconButton>
+                
+                    
+                </Paper>
+            </Box>
         <div className="table">
-            <TextField
-                id="outlined-basic"
-                variant="outlined"
-                fullWidth
-                label="Customer name"
-                onChange={handleName}
-                //onSubmit={() => filterData()}
-            />
             <TableContainer
                 component={Paper}
                 style={{ boxShadow: "0px 13px 20px 0px #80808029", borderRadius: '1rem', background: (modal==='block') && 'rgba(0,0,0,0.4)'}}
@@ -73,35 +96,32 @@ function Search({data}) {
                     <TableHead>
                     <TableRow>
                         {titles.map((title, index) => {
-                        if (index===0) return (<TableCell key={index}>{title}</TableCell>) 
-                        else return (<TableCell key={index} align= 'left'>{title}</TableCell>)
+                        if (index===0) return (<TableCell key={index} align='center'>{title}</TableCell>) 
+                        else return (<TableCell key={index} align= 'center'>{title}</TableCell>)
                         })}
                     </TableRow>
                     </TableHead>
                     <TableBody style={{ color: "white", overflowY: 'scroll' }}>
-                    {customers.map((customer) => (
+                    {!customers && <TableRow><TableCell colSpan={7}  align="center"><h2>Bắt đầu tìm kiếm</h2></TableCell></TableRow>}
+                    { customers && customers.map((customer) => (
                         <TableRow
-                        key={customer.Customer_id}
+                        key={customer}
                         sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                        hover={true}
+                        onClick={() => handleClick(customer.Customer_id, customer.Fullname)}
                         >
-                        <TableCell component="th" scope="customer">
+                        <TableCell component="th" scope="customer" align="center">
                             {customer.Customer_id}
                         </TableCell>
-                        <TableCell align="left">{customer.Customer_type}</TableCell>
-                        <TableCell align="left">{customer.Fullname}</TableCell>
-                        <TableCell align="left">{customer.Email}</TableCell>
-                        <TableCell align="left">{customer.Phone}</TableCell>
-                        <TableCell align="left">{customer.Username}</TableCell>
-                        {/* <TableCell align="left">{customer.Password}</TableCell> */}
-                        <TableCell align="left">{customer.Ssn}</TableCell>
-                        <TableCell align="left">{customer.Score}</TableCell>
-                        <TableCell align="left" style={{display: 'flex', justifyContent: 'center'}}>
-                            <FontAwesomeIcon 
-                                className="icon" 
-                                icon={faInfo} 
-                                onClick={() => handleClick()}
-                            />
-                        </TableCell>
+                        <TableCell align="center">{customer.Customer_type}</TableCell>
+                        <TableCell align="center">{customer.Fullname}</TableCell>
+                        <TableCell align="center">{customer.Email}</TableCell>
+                        <TableCell align="center">{customer.Phone}</TableCell>
+                        <TableCell align="center">{customer.Username}</TableCell>
+                        {/* <TableCell align="center">{customer.Password}</TableCell> */}
+                        <TableCell align="center">{customer.Ssn}</TableCell>
+                        <TableCell align="center">{customer.Score}</TableCell>
+                       
                         </TableRow>
                     ))}
                     </TableBody>

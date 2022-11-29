@@ -10,6 +10,35 @@ export async function getCustomer() {
     .then((response) => response.json())
     
 }
+export async function getCustomerByName(fullname) {
+ 
+  return fetch('/db/GetCustomerByName', {
+  method: 'POST', // *GET, POST, PUT, DELETE, etc.
+  
+  credentials: 'same-origin', // include, *same-origin, omit
+  headers: {
+      'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({"fullname":fullname},)
+  })
+  .then((response) => response.json())
+  
+}
+
+export async function getRoomBooking(id) {
+ 
+  return fetch('/db/GetRoomBooking', {
+  method: 'POST', // *GET, POST, PUT, DELETE, etc.
+  
+  credentials: 'same-origin', // include, *same-origin, omit
+  headers: {
+      'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({"id":id},)
+  })
+  .then((response) => response.json())
+  
+}
 
 export async function getCustomerStat(branch_id, year) {
     // let branch_id = $('#branch option:selected').val()
@@ -17,7 +46,6 @@ export async function getCustomerStat(branch_id, year) {
 
     return fetch('/db/GetCustomerStat', {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
-    
     
     body: JSON.stringify({"branch_id": parseInt(branch_id), "year": parseInt(year)}),
     credentials: 'same-origin', // include, *same-origin, omit

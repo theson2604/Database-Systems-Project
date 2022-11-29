@@ -95,7 +95,7 @@ import { getCustomer } from "../../service";
                   key={row.Customer_id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
-                  <TableCell component="th" scope="row">
+                  <TableCell component="th" scope="row" align="center">
                     {row.Customer_id}
                   </TableCell>
                   <TableCell align="center">{row.Customer_type}</TableCell>
@@ -111,7 +111,7 @@ import { getCustomer } from "../../service";
                 </TableRow>
               )
               })}
-              {!customers && <TableRow ><TableCell align="center" colSpan={2}><b>Loading ...</b></TableCell></TableRow>}
+              {!customers && <TableRow ><TableCell align="center" colSpan={7}><b>Loading ...</b></TableCell></TableRow>}
             </TableBody>
           </Table>
         </TableContainer>
