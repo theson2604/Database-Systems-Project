@@ -7,12 +7,16 @@ import Supply from "../Supply/Supply";
 import Bed from "../Bed/Bed";
 
 function AddRoom() {
+    const [bedInfo, setBedInfo] = useState()
+    const[supplyInfo, setSupplyInfo] = useState([])
     const [values, setValues] = useState({
         Roomtype_id: "",
         Type_name: "",
         Area: "",
         Max_guests: "",
         Other_description: "",
+        Bed: [],
+        Supply: [],
       });
     
       const inputs = [
@@ -65,6 +69,19 @@ function AddRoom() {
       const onChange = (e) => {
         setValues({ ...values, [e.target.name]: e.target.value });
       };
+
+      const handleBed = (data) => {
+        setBedInfo(data)
+        let newValue ={...values, Bed: [...bedInfo]}
+        setValues(newValue)
+      }
+
+      const handleSupply = (data) => {
+        setSupplyInfo(data)
+        let newValue = {...values, Supply: [...supplyInfo]}
+        setValues(newValue)
+        console.log(values)
+      }
     
       return (
         <div className="addWrapper">
@@ -79,8 +96,8 @@ function AddRoom() {
                   onChange={onChange}
                 />
               ))}
-              <Bed/>
-              <Supply/>
+              <Bed setBedInfo={handleBed}/>
+              <Supply setSupplyInfo={handleSupply}/>
               <button>Submit</button>
             </form>
           </Paper >

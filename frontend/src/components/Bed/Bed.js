@@ -9,7 +9,7 @@ import DialogContent from '@mui/material/DialogContent';
 // import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-function Bed() {
+function Bed({setBedInfo}) {
     const [size, setSize] = useState()
     const [quantity, setQuantity] = useState()
     const [beds, setBeds] = useState([])
@@ -28,6 +28,7 @@ function Bed() {
                 quantity: quantity,
             }
             setBeds([...beds, newBed])
+            setBedInfo(beds)
         }
     };
 
@@ -38,9 +39,8 @@ function Bed() {
             newBeds.splice(index, 1)
             setBeds(newBeds)
         }
+        setBedInfo(beds)
     }
-
-    console.log('bed', beds)
 
     return (
         <div style={{marginBottom: '0.5rem'}}>

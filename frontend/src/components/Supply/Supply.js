@@ -41,11 +41,12 @@ function getStyles(name, personName, theme) {
   };
 }
 
-export default function Suppy() {
+export default function Suppy({setSupplyInfo}) {
   const theme = useTheme();
   const [personName, setPersonName] = useState([]);
 
   const handleChange = (e) => {
+    setSupplyInfo([...personName, e.target.value])
     const {
       target: { value },
     } = e
