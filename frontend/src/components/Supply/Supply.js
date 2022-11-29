@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -41,12 +41,11 @@ function getStyles(name, personName, theme) {
   };
 }
 
-export default function Suppy({setSupplyInfo}) {
+export default function Suppy({getSupplyInfo}) {
   const theme = useTheme();
   const [personName, setPersonName] = useState([]);
 
   const handleChange = (e) => {
-    setSupplyInfo([...personName, e.target.value])
     const {
       target: { value },
     } = e
@@ -55,6 +54,10 @@ export default function Suppy({setSupplyInfo}) {
       typeof value === 'string' ? value.split(',') : value,
     );
   };
+
+  useEffect(() => {
+    getSupplyInfo(personName)
+  }, [personName])
 
   return (
     <div>

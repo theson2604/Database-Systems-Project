@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';  
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -9,7 +9,7 @@ import DialogContent from '@mui/material/DialogContent';
 // import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-function Bed({setBedInfo}) {
+function Bed({getBedInfo}) {
     const [size, setSize] = useState()
     const [quantity, setQuantity] = useState()
     const [beds, setBeds] = useState([])
@@ -28,7 +28,6 @@ function Bed({setBedInfo}) {
                 quantity: quantity,
             }
             setBeds([...beds, newBed])
-            setBedInfo(beds)
         }
     };
 
@@ -39,8 +38,11 @@ function Bed({setBedInfo}) {
             newBeds.splice(index, 1)
             setBeds(newBeds)
         }
-        setBedInfo(beds)
     }
+
+    useEffect(() => {
+        getBedInfo(beds)
+    }, [beds])
 
     return (
         <div style={{marginBottom: '0.5rem'}}>
