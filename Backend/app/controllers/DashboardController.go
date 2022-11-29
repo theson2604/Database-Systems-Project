@@ -8,7 +8,7 @@ import (
 	// "fmt"
 	// "github.com/jinzhu/copier"
 
-
+	"log"
 
 	"github.com/gofiber/fiber/v2"
 
@@ -23,6 +23,8 @@ import (
 type DashboardController struct {
 	GetCustomer func(*fiber.Ctx) error
 	GetCustomerStat func(*fiber.Ctx) error
+	GetCustomerByName func(*fiber.Ctx) error
+	GetRoomBooking func(*fiber.Ctx) error
 	InsertRoom func(*fiber.Ctx) error
 	UserList func(*fiber.Ctx) error
 	ShowLogin func(*fiber.Ctx) error
@@ -95,6 +97,54 @@ func InitializeDashboardController() DashboardController {
 		db.Db.Create(&Room.Bed)
 
 		return c.SendString("done")
+	}
+	dashboardController.GetCustomerByName = func (c *fiber.Ctx) error {
+		name := struct { Fullname string `json:"fullname"`}{}
+		if err := c.BodyParser(&name); err != nil {
+			panic(err)
+		}
+		log.Println(name)
+		sess, err := store.Store.Get(c)
+		if err != nil {
+			panic(err)
+		}
+		
+		Customer := []models.Customer{}
+		db.ConnectDatabase(sess.Get("username").(string), sess.Get("password").(string))
+		defer func() {
+			sqll, _ := db.Db.DB()
+			sqll.Close()
+
+		}()
+			
+		db.Db.Where(&models.Customer{Fullname: name.Fullname}).Find(&Customer)
+		return c.JSON(Customer)
+	}
+
+	dashboardController.GetRoomBooking = func (c *fiber.Ctx) error {
+		id := struct {
+			ID string `json:"id"`
+		}{}
+		if err := c.BodyParser(&id); err != nil {
+			panic(err)
+		}
+		
+		sess, err := store.Store.Get(c)
+		if err != nil {
+			panic(err)
+		}
+		
+		Booking_room := []models.BookingRoom{}
+		db.ConnectDatabase(sess.Get("username").(string), sess.Get("password").(string))
+		defer func() {
+			sqll, _ := db.Db.DB()
+			sqll.Close()
+
+		}()
+		db.Db.Where(&models.BookingRoom{Customer_id: id.ID}).Find(&Booking_room)
+		
+		
+		return c.JSON(Booking_room)
 	}
 
 	return dashboardController

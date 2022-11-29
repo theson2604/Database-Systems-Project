@@ -13,6 +13,8 @@ var dashboardController controllers.DashboardController= controllers.InitializeD
 func DashboardRouter(dashboard fiber.Router) {
 	
 	dashboard.Post("/GetCustomer",dashboardController.GetCustomer)
+	dashboard.Post("/GetCustomerByName",dashboardController.GetCustomerByName)
+	dashboard.Post("/GetRoomBooking",dashboardController.GetRoomBooking)
 	dashboard.Post("/AddRoom", dashboardController.InsertRoom)
 	dashboard.Post("/GetCustomerStat", dashboardController.GetCustomerStat)
 	

@@ -100,6 +100,11 @@ func InitializeHomeController() HomeController {
 		
 		branchyear := struct {Branch, Year []int}{}
 		db.ConnectDatabase(sess.Get("username").(string), sess.Get("password").(string))
+		defer func() {
+			sqll, _ := db.Db.DB()
+			sqll.Close()
+
+		}()
 		db.Db.Table("BRANCH").Select("BRANCH.branch_id AS branch_id").Order("branch_id").Scan(&branchyear.Branch)
 		db.Db.Table("INVOICE").Distinct("YEAR(INVOICE.invoice_date) AS year").Order("year").Scan(&branchyear.Year)
 		return c.JSON(branchyear)
