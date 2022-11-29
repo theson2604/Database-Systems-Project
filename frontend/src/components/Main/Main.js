@@ -26,7 +26,6 @@ function Main({data}) {
     else if (data[0] === 'static') Page = StatTable
     else Page = Customer
 
-    console.log(data)
 
     return ( 
         <div className='Main'>

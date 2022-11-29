@@ -3,7 +3,7 @@ import "./Form.scss";
 
 const FormInput = (props) => {
   const [focused, setFocused] = useState(false);
-  const { label, errorMessage, onChange, id, ...inputProps } = props;
+  const { label, onChange, id, ...inputProps } = props;
 
   const handleFocus = (e) => {
     setFocused(true);
@@ -21,7 +21,6 @@ const FormInput = (props) => {
         }
         focused={focused.toString()}
       />
-      <span>{errorMessage}</span>
     </div>
   );
 };
