@@ -4,7 +4,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 
 	controllers "database_assignment/app/controllers"
-	middleware "database_assignment/app/middlewares"
+	
 )
 
 
@@ -15,7 +15,6 @@ func HomeRouter(home fiber.Router) {
 	home.Post("/login", homeController.Login)
 	home.Post("/logout", homeController.Logout)
 	home.Post("/branchyear", homeController.GetBranchYear)
-	home.Get("/dashboard", middleware.IsAuthenticated, homeController.Dashboard)
-	home.Get("/", middleware.SwithcRoute, homeController.Home)
-	home.Get("*", homeController.EmptyPage)
+	
+	home.Get("*", homeController.Home)
 }

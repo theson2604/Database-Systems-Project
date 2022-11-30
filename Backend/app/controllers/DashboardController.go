@@ -25,6 +25,7 @@ type DashboardController struct {
 	GetCustomerStat func(*fiber.Ctx) error
 	GetCustomerByName func(*fiber.Ctx) error
 	GetRoomBooking func(*fiber.Ctx) error
+	GetSupplyType func(*fiber.Ctx) error
 	InsertRoom func(*fiber.Ctx) error
 	UserList func(*fiber.Ctx) error
 	ShowLogin func(*fiber.Ctx) error
@@ -85,18 +86,51 @@ func InitializeDashboardController() DashboardController {
 	}
 	dashboardController.InsertRoom = func (c *fiber.Ctx) error {
 		Room := struct {
-			Roomtype models.RoomType
-			Bed 	models.Bed
+			Roomtype 	models.RoomType		`json:"room_type"`
+			Bed 		[]models.Bed		`json:"bed"`
+			Supply		[]models.SupplyType	`json:"supply"`
 
 		}{}
 		if err := c.BodyParser(&Room); err != nil {
-			return err
+			panic(err)
 		}
+		sess, err := store.Store.Get(c)
+		if err != nil {
+			panic(err)
+		}
+		db.ConnectDatabase(sess.Get("username").(string), sess.Get("password").(string))
+		defer func() {
+			sqll, _ := db.Db.DB()
+			sqll.Close()
 
+		}()
+		log.Println(Room)
 		db.Db.Create(&Room.Roomtype)
-		db.Db.Create(&Room.Bed)
+		
+		log.Println(Room.Roomtype)
+		
+		if (len(Room.Bed) > 0) {
+			for i := 0; i < len(Room.Bed); i++ {
+				Room.Bed[i].Roomtype_id = Room.Roomtype.Roomtype_id
+			}
+			db.Db.Create(&Room.Bed)
+		}
+		if (len(Room.Supply) > 0){
+			var supplyInRoom []models.SupplyInRoom
+			for i := 0; i < len(Room.Supply); i++ {
+				item := models.SupplyInRoom{}
+				item.Roomtype_id = Room.Roomtype.Roomtype_id
+				item.Supplytype_id = Room.Supply[i].Supplytype_id
+				item.Quantity = 1
+				supplyInRoom = append(supplyInRoom, item)
+			}
+			db.Db.Create(&supplyInRoom)
+		}
+		msg := struct {
+			Message string
+		}{"done"}
 
-		return c.SendString("done")
+		return c.JSON(msg)
 	}
 	dashboardController.GetCustomerByName = func (c *fiber.Ctx) error {
 		name := struct { Fullname string `json:"fullname"`}{}
@@ -146,6 +180,20 @@ func InitializeDashboardController() DashboardController {
 		
 		return c.JSON(Booking_room)
 	}
+	dashboardController.GetSupplyType = func (c *fiber.Ctx) error {
+		sess, err := store.Store.Get(c)
+		if err != nil {
+			panic(err)
+		}
+		supply := []models.SupplyType{}
+		db.ConnectDatabase(sess.Get("username").(string), sess.Get("password").(string))
+		defer func() {
+			sqll, _ := db.Db.DB()
+			sqll.Close()
 
+		}()
+		db.Db.Find(&supply)
+		return c.JSON(supply)
+	}
 	return dashboardController
 }

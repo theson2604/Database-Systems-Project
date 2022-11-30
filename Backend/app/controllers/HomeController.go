@@ -38,12 +38,9 @@ func InitializeHomeController() HomeController {
 	
 	
 	homeController.Home = func(c *fiber.Ctx) error {
-		return c.Render("home", fiber.Map{})
+		return c.SendFile("./public/build/index.html")
 	}
-	homeController.EmptyPage = func (c *fiber.Ctx) error {
-		c.Status(404)
-		return c.Render("alert", fiber.Map{"content":"We cannot find your page :("})
-	}
+	
 	homeController.Login = func(c *fiber.Ctx) error {
 		payload := struct {
 			Username  string `json:"username"`

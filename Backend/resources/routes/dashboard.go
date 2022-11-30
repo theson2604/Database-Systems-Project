@@ -17,5 +17,6 @@ func DashboardRouter(dashboard fiber.Router) {
 	dashboard.Post("/GetRoomBooking",dashboardController.GetRoomBooking)
 	dashboard.Post("/AddRoom", dashboardController.InsertRoom)
 	dashboard.Post("/GetCustomerStat", dashboardController.GetCustomerStat)
+	dashboard.Post("/GetSupplyType", dashboardController.GetSupplyType)
 	
 }

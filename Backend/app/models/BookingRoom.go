@@ -15,7 +15,7 @@ type BookingRoom struct {
 	State			int	`gorm:"column:state"`
 	Total_cost		int		`gorm:"total_cost"`
 	Customer_id		string	`gorm:"column:customer_id"`
-	Packet_name		string	`gorm:"column:_"`
+	Packet_name		string	
 }
 
 func (BookingRoom) TableName() string {

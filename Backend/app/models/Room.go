@@ -5,7 +5,7 @@ type RoomType struct {
 	Roomtype_name	string		`gorm:"column:type_name"`
 	Area			float32		`gorm:"column:area"`
 	Max_guests		uint		`gorm:"column:max_guests"`
-	Other			string		`gorm:"column:other_descriptino"`
+	Other			string		`gorm:"column:other_description"`
 }
 
 type Bed struct {
