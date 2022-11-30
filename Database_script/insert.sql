@@ -214,10 +214,10 @@ VALUES ('DVM616', 'bandai'),
        ('DVM616', 'superworld');
 
 INSERT INTO DB_Assignment.PREMISE
-VALUES (1, 12, 3.3, 5.6, 400, 'gan bien', 'DVR329', 'FoodCircles', 'https://thietkeaz.com/images/thiet-ke-logo-nha-hang-04.jpg'),
-       (2, 4, 2.3, 5.6, 300, 'gan nha hang', 'DVS328', 'Keangnam Spa', 'http://xuonginhanoi.vn/files/thiet-ke-lo-go-spa-01.png'),
-       (3, 38, 5, 9.5, 650, 'gan cong ra vao', 'DVC327', 'Circle K', 'https://images.glints.com/unsafe/360x0/glints-dashboard.s3.amazonaws.com/company-logo/2df2cb4a69b799e4827bfdb25816d00a.png'),
-       (4, 26, 4.2, 7.6, 520, 'trung tam resort', 'DVM326', 'Gift Shop', 'https://banner2.cleanpng.com/20180417/opw/kisspng-gift-shop-shopping-souvenir-retail-bioshock-5ad5f4220eb287.9289110715239711060602.jpg');
+VALUES (1, 12, 3.3, 5.6, 400, 'gan bien', 'DVR619', 'FoodCircles', 'https://thietkeaz.com/images/thiet-ke-logo-nha-hang-04.jpg'),
+       (2, 4, 2.3, 5.6, 300, 'gan nha hang', 'DVS618', 'Keangnam Spa', 'http://xuonginhanoi.vn/files/thiet-ke-lo-go-spa-01.png'),
+       (3, 38, 5, 9.5, 650, 'gan cong ra vao', 'DVC617', 'Circle K', 'https://images.glints.com/unsafe/360x0/glints-dashboard.s3.amazonaws.com/company-logo/2df2cb4a69b799e4827bfdb25816d00a.png'),
+       (4, 26, 4.2, 7.6, 520, 'trung tam resort', 'DVM616', 'Gift Shop', 'https://banner2.cleanpng.com/20180417/opw/kisspng-gift-shop-shopping-souvenir-retail-bioshock-5ad5f4220eb287.9289110715239711060602.jpg');
 
 INSERT INTO DB_Assignment.SHOP_PHOTO
 VALUES (1, 12, 'https://media-cdn.tripadvisor.com/media/photo-s/06/eb/6d/ca/vinpearl-resort-phu-quoc.jpg'),
