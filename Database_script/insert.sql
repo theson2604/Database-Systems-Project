@@ -202,16 +202,16 @@ VALUES ('DVS618', 'DN7359'),
        ('DVS618', 'DN7356');
 
 INSERT INTO DB_Assignment.SOUVERNIR_SERVICE
-VALUES ('DVM326', 'DN2329'),
-       ('DVM326', 'DN2328'),
-       ('DVM326', 'DN2327'),
-       ('DVM326', 'DN2326');
+VALUES ('DVM616', 'DN2329'),
+       ('DVM616', 'DN2328'),
+       ('DVM616', 'DN2327'),
+       ('DVM616', 'DN2326');
 
 INSERT INTO DB_Assignment.SOUVENIR_BRAND
-VALUES ('DVM326', 'bandai'),
-       ('DVM326', 'wonderland'),
-       ('DVM326', 'amazingbay'),
-       ('DVM326', 'superworld');
+VALUES ('DVM616', 'bandai'),
+       ('DVM616', 'wonderland'),
+       ('DVM616', 'amazingbay'),
+       ('DVM616', 'superworld');
 
 INSERT INTO DB_Assignment.PREMISE
 VALUES (1, 12, 3.3, 5.6, 400, 'gan bien', 'DVR329', 'FoodCircles', 'https://thietkeaz.com/images/thiet-ke-logo-nha-hang-04.jpg'),
