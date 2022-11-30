@@ -228,5 +228,5 @@ VALUES (1, 12, 'https://media-cdn.tripadvisor.com/media/photo-s/06/eb/6d/ca/vinp
 INSERT INTO DB_Assignment.SHOP_WORKING_TIME
 VALUES (1, 12, '08:30:00', '21:30:00'),
        (2, 4, '08:30:00', '21:30:00'),
-       (3, 50, '08:30:00', '21:30:00'),
+       (3, 38, '08:30:00', '21:30:00'),
        (4, 26, '08:30:00', '21:30:00');
