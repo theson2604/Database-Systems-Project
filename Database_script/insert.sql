@@ -47,7 +47,7 @@ VALUES ('VT2329', 'goi 1'),
        ('VT2326', 'goi 4');
 
 INSERT INTO DB_Assignment.SUPPLY_IN_ROOM
-VALUES ('VT2329', 1, 21),
+VALUES ('VT2329', 1, 2),
        ('VT2328', 2, 3),
        ('VT2327', 3, 4),
        ('VT2326', 4, 4);
