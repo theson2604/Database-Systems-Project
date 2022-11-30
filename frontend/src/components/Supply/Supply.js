@@ -54,9 +54,7 @@ export default function Suppy({selectSupply, setSelectSupply}) {
     );
   };
 
-  useEffect(() => {
-    getSupplyInfo(personName)
-  }, [personName])
+
 
   return (
     <div>

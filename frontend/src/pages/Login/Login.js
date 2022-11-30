@@ -11,7 +11,7 @@ function Login ({tokener, setToken}) {
     if (tokener) {
       navigate("/db")
     }
-    console.log(tokener)
+    
   })
   const navigate = useNavigate()
   const [state, setState] = useState(false)
@@ -27,7 +27,7 @@ function Login ({tokener, setToken}) {
     if (!token.token)
       setState(true)
     else 
-      console.log(token.token)
+      
       setToken(token)
   }
   return (

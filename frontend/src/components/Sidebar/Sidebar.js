@@ -3,7 +3,7 @@ import './Sidebar.scss'
 // import { getCustomer, getCustomerStat } from "../../service";
 
 const Sidebar = ({handleData}) => {
-    const [selected, setSelected] = useState('')
+    const [selected, setSelected] = useState('customer')
     
     const handleClick = (type) => {
       let data = '123'

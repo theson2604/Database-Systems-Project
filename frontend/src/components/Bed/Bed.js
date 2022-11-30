@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Button from '@mui/material/Button';  
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -41,10 +41,7 @@ function Bed({beds, setBeds}) {
         }
     }
 
-    useEffect(() => {
-        getBedInfo(beds)
-    }, [beds])
-
+   
     return (
         <FormControl sx={{ m: 1}}>
             Bed

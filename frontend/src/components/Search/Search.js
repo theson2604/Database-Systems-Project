@@ -57,7 +57,9 @@ function Search() {
     }
     const handleSubmit = async (e) => {
         e.preventDefault()
-        setCustomers(filterData())
+        let dt = filterData()
+        if (dt.length > 0)
+            setCustomers(dt)
         // const cus = await getCustomerByName(name)
         
     }

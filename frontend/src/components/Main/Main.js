@@ -30,7 +30,7 @@ function Main({data}) {
     return ( 
         <div className='Main'>
             <h1>Dashboard</h1>
-            {(data.length !== 0) && <Page data={data}/>}
+            <Page data={data}/>
         </div>
     );
 }
