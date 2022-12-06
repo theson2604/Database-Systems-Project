@@ -70,6 +70,18 @@ export async function loginUser(credentials) {
       .then(data => data.json())
    }
 
+  export async function logout() {
+  return fetch('/logout', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    
+    credentials: 'same-origin'
+  })
+    .then(data => data.json())
+  }
+
 export async function getSupplyType() {
   return fetch('/db/GetSupplyType', {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.

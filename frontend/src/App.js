@@ -15,7 +15,7 @@ function App() {
         <div>
           <Routes>
             <Route path='/' element={<Login tokener={token} setToken={setToken} />}/>
-            <Route path='/db' element={<Dashboard/>}/>
+            <Route path='/db' element={<Dashboard token={token} setToken={setToken} />}/>
           </Routes>
         </div>
     </Router>

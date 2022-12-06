@@ -9,6 +9,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import "./Customer.scss";
 import { getCustomer } from "../../service";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -58,15 +59,19 @@ import { getCustomer } from "../../service";
     
     const [customers, setCustomers] = useState()
     // if (info === '' || info === undefined || info === null) return 
-    
+    const navigate = useNavigate()
     const titles = setTitle()
     // const rows = info
     
     useEffect(() => {
       async function fetchCustomer() {
-        const cus = await getCustomer();
-       
-        setCustomers(cus)
+        try {
+          const cus = await getCustomer();
+          setCustomers(cus)
+        } catch (error) {
+          console.log(error)
+          navigate("/")
+        }
       }
       if (!customers)
         fetchCustomer()

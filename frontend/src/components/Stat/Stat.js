@@ -13,13 +13,57 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import { Button } from "@mui/material";
+import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { getCustomerStat } from "../../service";
 
 
-  const setTitle = () => {
-    return ['Month', 'Total customers']
-  }
-
+const setTitle = () => {
+  return ['Month', 'Total customers']
+}
+const data = [
+  {
+    name: 'Page A',
+    uv: 4000,
+    pv: 2400,
+    amt: 2400,
+  },
+  {
+    name: 'Page B',
+    uv: 3000,
+    pv: 1398,
+    amt: 2210,
+  },
+  {
+    name: 'Page C',
+    uv: 2000,
+    pv: 9800,
+    amt: 2290,
+  },
+  {
+    name: 'Page D',
+    uv: 2780,
+    pv: 3908,
+    amt: 2000,
+  },
+  {
+    name: 'Page E',
+    uv: 1890,
+    pv: 4800,
+    amt: 2181,
+  },
+  {
+    name: 'Page F',
+    uv: 2390,
+    pv: 3800,
+    amt: 2500,
+  },
+  {
+    name: 'Page G',
+    uv: 3490,
+    pv: 4300,
+    amt: 2100,
+  },
+];
  
 function StatTable() {
     
@@ -60,11 +104,17 @@ function StatTable() {
       
       const getStat = await getCustomerStat(branch, year);
       if (getStat.length)
+        for (let i = 0; i < 12 ; i++ ) {
+          if (getStat[i]?.Month != i+1)
+            getStat.splice(i, 0, {"Month": i+1, "Total_customers": 0})
+        }
+        console.log(getStat)
         setInfo(getStat)
 
     }
 
     return ( 
+      <>
     <div className="table">
         <h3>{'Statistic information of branch'}</h3>
         
@@ -75,7 +125,7 @@ function StatTable() {
             id="select-branch"
             
             label="Branch"
-            onChange={e => setBranch(e.target.value)}
+            onChange={e => {setBranch(e.target.value); setInfo([])}}
           >
           
           {viewBranch.map((id, idx)=> {
@@ -93,7 +143,7 @@ function StatTable() {
             id="select-year"
             
             label="year"
-            onChange={e => setYear(e.target.value)}
+            onChange={e => {setYear(e.target.value); setInfo([])}}
           >
           
           {viewYear.map((id, idx)=> {
@@ -111,7 +161,7 @@ function StatTable() {
         </FormControl>
             
         
-        <TableContainer
+        {/* <TableContainer
           component={Paper}
           style={{ boxShadow: "0px 13px 20px 0px #80808029", borderRadius: '1rem'}}
         >
@@ -138,8 +188,38 @@ function StatTable() {
               {!info && <TableRow><TableCell align="center" colSpan={2}><h2>Chưa có dữ liệu</h2></TableCell></TableRow>}
             </TableBody>
           </Table>
-        </TableContainer>
-    </div> 
+        </TableContainer> */}
+        </div>
+         {info?.length !== 0 && <div>
+          <h3>{`Customer Statistic At Branch CN${branch} In The Year Of ${year}`}</h3>
+         <ResponsiveContainer width="99%" aspect={3}>
+          
+        <BarChart
+          width={1100}
+          height={600}
+          data={info}
+          margin={{
+            top: 5,
+            right: 30,
+            left: 20,
+            bottom: 5,
+          }}
+        >
+          
+      
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis name="Month" dataKey="Month" />
+          <YAxis />
+          <Tooltip />
+          <Legend/>
+          <Bar name="Total Customer" dataKey="Total_customers" fill="#8884d8" />
+         
+        </BarChart>
+      </ResponsiveContainer>
+      </div>
+      }
+     
+    </>
     );
 }
 
