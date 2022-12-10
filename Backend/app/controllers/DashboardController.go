@@ -38,9 +38,11 @@ func InitializeDashboardController() DashboardController {
 	dashboardController.GetCustomer = func (c *fiber.Ctx) error {
 		sess, err := store.Store.Get(c)
 		if err != nil {
-			panic(err)
+			return c.SendStatus(fiber.StatusUnauthorized)
 		}
-		
+		if (sess.Get("username") == nil) {
+			return c.SendStatus(fiber.StatusUnauthorized)
+		}
 		db.ConnectDatabase(sess.Get("username").(string), sess.Get("password").(string))
 		Customer := []models.Customer{}
 		db.Db.Find(&Customer)
@@ -52,7 +54,7 @@ func InitializeDashboardController() DashboardController {
 			Year 		int `json:"year"`
 		}{}
 		if err := c.BodyParser(&payload); err != nil {
-			return err
+			return c.SendStatus(fiber.StatusUnauthorized)
 		}
 	
 		// payload.Branch_id = 1
@@ -63,7 +65,7 @@ func InitializeDashboardController() DashboardController {
 		}{}
 		sess, err := store.Store.Get(c)
 		if err != nil {
-			panic(err)
+			return c.SendStatus(fiber.StatusUnauthorized)
 		}
 		
 		db.ConnectDatabase(sess.Get("username").(string), sess.Get("password").(string))
@@ -92,11 +94,11 @@ func InitializeDashboardController() DashboardController {
 
 		}{}
 		if err := c.BodyParser(&Room); err != nil {
-			panic(err)
+			return c.SendStatus(fiber.StatusUnauthorized)
 		}
 		sess, err := store.Store.Get(c)
 		if err != nil {
-			panic(err)
+			return c.SendStatus(fiber.StatusUnauthorized)
 		}
 		db.ConnectDatabase(sess.Get("username").(string), sess.Get("password").(string))
 		defer func() {
@@ -140,7 +142,7 @@ func InitializeDashboardController() DashboardController {
 		log.Println(name)
 		sess, err := store.Store.Get(c)
 		if err != nil {
-			panic(err)
+			return c.SendStatus(fiber.StatusUnauthorized)
 		}
 		
 		Customer := []models.Customer{}
@@ -175,7 +177,7 @@ func InitializeDashboardController() DashboardController {
 			sqll.Close()
 
 		}()
-		db.Db.Where(&models.BookingRoom{Customer_id: id.ID}).Find(&Booking_room)
+		db.Db.Where(&models.BookingRoom{Customer_id: id.ID}).Order("booking_date DESC").Find(&Booking_room)
 		
 		
 		return c.JSON(Booking_room)
