@@ -41,10 +41,10 @@ VALUES ('101', 1, 1, 'san vuon'),
        ('104', 4, 4, 'biet thu');
 
 INSERT INTO DB_Assignment.SUPPLY_TYPE
-VALUES ('VT2329', 'goi 1'),
-       ('VT2328', 'goi 2'),
-       ('VT2327', 'goi 3'),
-       ('VT2326', 'goi 4');
+VALUES ('VT2329', 'tủ lạnh'),
+       ('VT2328', 'tivi'),
+       ('VT2327', 'bình siêu tốc'),
+       ('VT2326', 'bàn ủi');
 
 INSERT INTO DB_Assignment.SUPPLY_IN_ROOM
 VALUES ('VT2329', 1, 2),
@@ -71,10 +71,10 @@ VALUES ('VT2329', 1 ,'NCC2329'),
        ('VT2326', 4 ,'NCC2326');
 
 INSERT INTO DB_Assignment.CUSTOMER
-VALUES ('KH258329', 079302042382, 'nguyenvana', 0173955261, 'nguyenvana@gmail.com' ,'nguyenvana', '123456', 188, 1),
-       ('KH258328', 079693093209, 'nguyenvanb', 0923829612, 'nguyenvanb@gmail.com' ,'nguyenvanb', '123456', 200, 2),
-       ('KH258327', 079802066383, 'nguyenvanc', 0994738027, 'nguyenvanc@gmail.com' ,'nguyenvanc', '123456', 439, 4),
-       ('KH258326', 079205642127, 'nguyenvand', 0928729612, 'nguyenvand@gmail.com' ,'nguyenvand', '123456', 215, 2);
+VALUES ('KH258329', 079302042382, 'Nguyễn Văn A', 0173955261, 'nguyenvana@gmail.com' ,'nguyenvana', '123456', 188, 1),
+       ('KH258328', 079693093209, 'Trần Văn B', 0923829612, 'nguyenvanb@gmail.com' ,'nguyenvanb', '123456', 200, 2),
+       ('KH258327', 079802066383, 'Ngô Khánh C', 0994738027, 'nguyenvanc@gmail.com' ,'nguyenvanc', '123456', 439, 4),
+       ('KH258326', 079205642127, 'Hoàng Minh D', 0928729612, 'nguyenvand@gmail.com' ,'nguyenvand', '123456', 215, 2);
 
 INSERT INTO DB_Assignment.PACKET
 VALUES ('1', 10, 2 ,600),
